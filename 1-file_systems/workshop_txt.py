@@ -25,7 +25,7 @@ def main():
             print("Please enter another user already registered user")
         else:
             val = []
-            val.append(name + ' ' + email+'\n')
+            val.append(name + ' ' + email)
             insert_data('info.txt','a+',val)
     elif number == 2:
         email = str(input('pls input a email :'))

@@ -1,3 +1,2 @@
-ahmet ahmet.com
-ahmet ahmet1.com
-ahmet ahmet2.com
+abc abc@gmail.com
+pqr pqr@gmail.com
