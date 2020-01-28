@@ -1,4 +1,6 @@
+# import os for check files
 import os
+
 #get data from any file
 def get_data(file_name):
     if os.path.exists(file_name): 
@@ -8,21 +10,19 @@ def get_data(file_name):
     else:
         val = []
         return insert_data(file_name,'w',val)
-    # with open(file_name,'r+') as f:
-    #     file = f.readlines()
-    # return file
+
 #insert data to any file
 def insert_data(file_name,mode,l1):
     with open(file_name,mode) as f:
         for i in l1:
             f.write(i)
+
 # main func
 def main():
     print(" 1 : add new element\n 2 : update a element \n 3 : delete a element\n 4 : show file\n 5 : exit")
     number = int(input('pls input a option :'))
     if number == 1:
         file = get_data('info2.txt')
-        # print(file)
         email = str(input('pls input a email :'))
         flag = False
         for i in file:
@@ -30,10 +30,6 @@ def main():
                 flag = True
             else:
                 flag =False
-        # file2 = []
-        # for i in file:
-        #     file2.append(i.split('\n')[0].split()[1])
-        # print(file2)
         if flag == True:
             print("Please enter another user already registered user")
         else:
@@ -76,5 +72,4 @@ def main():
     return main()
 
 if __name__=="__main__":
-    
     main()
