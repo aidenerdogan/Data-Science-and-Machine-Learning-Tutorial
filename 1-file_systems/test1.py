@@ -1,62 +1,74 @@
-import csv
-# importing required modules 
+import csv,sqlite3,os
 from zipfile import ZipFile as zf
 
-# specifying the zip file name 
+conn = sqlite3.connect('test4.db')
+
+c = conn.cursor()
+
+def insert_table(table,data):
+    c.execute("""CREATE TABLE IF NOT EXISTS %s (COMMENT_ID text,
+            AUTHOR text ,
+            DATE real,
+            CONTENT text,
+            CLASS real)""" % (table))
+    c.executemany("""INSERT INTO %s (COMMENT_ID,AUTHOR,DATE,CONTENT,CLASS) VALUES (?,?,?,?,?)""" % (table),(data))
+    conn.commit()
+# insert_table('test1')
+# def insert_into(data)
+# get data from any file
+def get_data(file):
+    lst = []
+    with open(file,'r+') as f:
+        # creating a csv dict reader object
+        reader = csv.reader(f)
+        for i in reader:
+            # add to list (bcs you can't use outside dict reader object)
+            lst.append(i)
+    return lst[:2]
+
+my_directory = os.getcwd()
+# print(my_directory)
 file_path = 'YouTube-Spam-Collection-v1.zip'
 
-# read and  extract file from zip file exercise
-# try:
-# 	with zf(file_path,'r') as zip_file:
-# 		# printing all the contents of the zip file 
-# 		zip_file.printdir()
-# 		print(type(zip_file))
-# 		# for i in zip_file.extractall():
-# 		# 	l1.append(i)
-# 	# 	for i in list(zip_file):
-# 	# 		l1.append(i)
-# 	# print(l1)
-# except FileExistsError  as e:
-# 	print(e)
+tables = []
+files = []
+def get_files(file_path):
+    with zf(file_path,'r') as zip_files:
+        zip_files.extractall()
+        entries = os.listdir(my_directory+'/'+(file_path.split('.')[0]))
+        for i in entries:
+            tables.append(i.split('-')[0])
+            files.append(my_directory+'/'+file_path.split('.')[0]+'/'+str(i))
+    return tables,files
+get_files(file_path)
+for i in files:
 
-def get_file():
-	l1 = []
-	count = 0
-	# opening the zip file in READ mode 
-	with zf(file_path,'r') as zip_file:
-		for i in zip_file.namelist():
-			if count>0:
-				l1.append(i)
-			count +=1
-	return l1
-for i in get_file():
-	print(i)
-def get_data(file):
-	l1 = []
-	# read data from csv file
-	with open(file,'r') as csv_file:
-		csv_reader = csv.reader(csv_file)
-		for i in csv_reader:
-			l1.append(i)
-	return l1[:2]
 
-def insert_data(file_name):
-	# insert data to csv file
-	with open(file_name,'w') as csv_file:
-		csv_writer = csv.writer(csv_file)
-		# insert data to csv file from csv files in zip file
-		for i in get_file():
-			csv_writer.writerows(get_data(i))
+# get_files(file_path)
+# print(tables)
+# print(files).
 
-# insert_data('test5.csv')
-for i in get_file():
-	print(get_data(i))
+def insert_data():
+    get_files(file_path)
+    for i,j in zip(tables,files):
+        insert_table(i,get_data(j))
 
-# https://www.google.com/search?q=extract+zip+file+python&oq=extract+xip+file+pythn&aqs=chrome.1.69i57j0l7.9183j0j7&sourceid=chrome&ie=UTF-8
 
-# https://www.pythonforthelab.com/blog/storing-data-with-sqlite/
-# print(get_data('test1.csv'))
-# Task:
-#      create multiple csv files with some data and compress it in zip format
-#      using python script first extract it after that read files one by one and create one table using sqlite3 and based on csv files insert data in tables
+def fetchall_data(tables):
+    for i in tables:
+        # c.execute('SELECT * FROM Youtube01Psy')
+        # rows = c.fetchall()
+        # for i in rows:
+        #     print(i)
+        c.execute("""SELECT * FROM %s""" % (i))
+        rows = c.fetchall()
+        for row in rows:
+            print(row)
+# insert_data()
+# fetchall_data(tables)
 
+
+# insert_table('Youtube01Psy',get_data('Youtube01-Psy.csv'))
+
+c.close()
+conn.close()

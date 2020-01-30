@@ -1,3 +1,4 @@
+# This codes for transport csv files from exist files to new csv file.
 import csv
 
 def get_data(file):
