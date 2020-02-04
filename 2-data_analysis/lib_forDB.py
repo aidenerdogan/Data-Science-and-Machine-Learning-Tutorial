@@ -1,3 +1,20 @@
+import sqlite3,re
+# cinection to db
+con = sqlite3.connect('test.db')
+# define a cursor object for run sqlite3 codes in python
+cursor = con.cursor()
+ # obj for get table from db
+obj = cursor.execute('SELECT name from sqlite_master where type= "table"')
+
+# get all data from db
+def get_data():
+	# loop for tables in db
+	for i in obj:
+		cursor.execute("""SELECT * FROM %s""" % (i))
+		# get all data in table
+		rows = cursor.fetchall()
+	# retun all data like a list
+	return rows
 # nlp script 
 def create_nlp():
 	spam = []
@@ -9,7 +26,7 @@ def create_nlp():
 		# convert to lowercase to avoid mismatch
 		l1 = l1.lower()
 		# split comment into the words(list)
-		words = l1.split()
+		words = re.findall(r"[\w]+",l1)
 		if row[4] == 1.0:
 			for word in  words:
 				if word not in spam and word not in not_spam:
@@ -22,13 +39,15 @@ def create_nlp():
 					not_spam.append(word)
 				elif word not in notr:
 					notr.append(word)
-	text = input('pls input a text :')
+	# for i in not_spam:
+	# 	print(i)
+	text = input('1pls input a text :')
 	# remove newline character and leading spaces
 	l1 = text.strip()
 	# convert to lowercase to avoid mismatch
 	l1 = l1.lower()
-	# split comment into the words(list)
-	words = l1.split()
+	# split comment into the words(list) by everything(' ',',','.'...)
+	words = re.findall(r"[\w]+",l1)
 	c1 = 0
 	c2 = 0
 	for word in words:
@@ -36,9 +55,9 @@ def create_nlp():
 			c1 = c1 + 1
 		elif word in not_spam:
 			c2 = c2 + 1
-	if c1/len(words) > c2/len(words):
+	if c1 > c2 :
 		print('this text ',round(c1/len(words)*100,2), 'percent spam')
-	elif c2/len(words) > c1/len(words):
+	elif c2 > c1:
 		print('this text ',round(c2/len(words)*100,2), 'percent not spam')
 	else:
 		print('this text is notr')
@@ -46,7 +65,7 @@ def create_nlp():
 	# print(not_spam)
 	# print(notr)
 
-# create_nlp()
+create_nlp()
 
 def nlp_option2():
 	positive = []
@@ -54,7 +73,7 @@ def nlp_option2():
 	for row in get_data():
 		l1 = row[3].strip()
 		l1.lower()
-		words = l1.split()
+		words = re.findall(r"[\w]+",l1)
 		for word in words:
 			if row[4] == 1.0:
 				if word not in negative:
@@ -62,13 +81,13 @@ def nlp_option2():
 			else:
 				if word not in positive:
 					positive.append(word)
-	text = input('pls input a text :')
+	text = input('2pls input a text :')
 	# remove newline character and leading spaces
 	l1 = text.strip()
 	# convert to lowercase to avoid mismatch
 	l1 = l1.lower()
-	# split comment into the words(list)
-	words = l1.split()
+	# split comment into the words(list) by everything(' ',',','.'...)
+	words = re.findall(r"[\w]+",l1)
 	c1 = 0
 	c2 = 0
 	for word in words:
@@ -80,4 +99,4 @@ def nlp_option2():
 		print('this text ', round(c1/len(words)*100,2),'percent not spam')
 	elif c2>c1:
 		print('this text ', round(c2/len(words)*100,2), 'percent spam')
-nlp_option2()
+# nlp_option2()

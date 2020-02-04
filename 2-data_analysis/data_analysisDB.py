@@ -91,7 +91,7 @@ def get_author_spam_repeat():
 			else:
 				d2[row[1]] = 1
 
-	for dic1,dic2 in zip(d.keys(),d2.keys()):
+	for dic1,dic2 in zip(`),d2.keys()):
 		print(dic1, ":", d[dic1], 'spam')
 		print(dic2, ":", d2[dic2], 'not spam')
 	# print dict contents
@@ -101,3 +101,6 @@ def get_author_spam_repeat():
 	# for key in (d2.keys()):
 	# 	print(key, ":", d2[key])
 # get_author_spam_repeat()
+
+cursor.close()
+con.close()
