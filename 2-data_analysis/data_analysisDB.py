@@ -1,3 +1,10 @@
+""" READ ME!
+This script created for data analysis/analytics
+1-Read all data from a sqlite db
+2-Find repeadetly by key (get_repeat())
+3-Find repeadetly by author (get_author_repeat())
+4-Find repeadetly by  spam/notspap count by author(get_author_spam_repeat())
+"""
 import sqlite3
 # cinection to db
 con = sqlite3.connect('test.db')
@@ -91,16 +98,9 @@ def get_author_spam_repeat():
 			else:
 				d2[row[1]] = 1
 
-	for dic1,dic2 in zip(`),d2.keys()):
+	for dic1,dic2 in zip(d.keys(),d2.keys()):
 		print(dic1, ":", d[dic1], 'spam')
 		print(dic2, ":", d2[dic2], 'not spam')
-	# print dict contents
-	# for key in (d.keys()):
-	# 	if d[key] > 1:
-	# 		print(key, ":", d[key])
-	# for key in (d2.keys()):
-	# 	print(key, ":", d2[key])
-# get_author_spam_repeat()
 
 cursor.close()
 con.close()
