@@ -31,12 +31,18 @@ def get_count():
 				countries[k] = countries[k] + 1
 			else:
 				countries[k] = 1
-	print(sorted(types.items(), key = 
-	             lambda kv:(kv[1], kv[0])))
+	# for row in listed:
+	# 	print(row)
+		# for row in get_data('netflix_titles.csv'):
+		# 	if a in 
+		
+	# print(sorted(types.items(), key = 
+	             # lambda kv:(kv[1], kv[0])))
 	print(sorted(listed.items(), key = 
 	             lambda kv:kv[1]))
-	print(sorted(countries.items(), key = 
-	             lambda kv:kv[1]))
+	# print(sorted(countries.items(), key = 
+	             # lambda kv:kv[1]))
+get_count()
 def find_film(text):
 	film_list = []
 	# print(re.findall(r"[\w']+",text))
@@ -61,5 +67,5 @@ def find_film(text):
 			film_list.append(row['title'])
 	print(film_list)
 
-text = input('Please enter a phrase about your movie tastes :')
-find_film(text)
+# text = input('Please enter a phrase about your movie tastes :')
+# find_film(text)
