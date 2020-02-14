@@ -131,3 +131,4 @@ pandas astype parameter
 dask.dataframe (best one for more than 1GB-100GB)
 datatable  still have not looked into how well it is integrated with other libraries.
 paratext fastest one but diffucult setup (not posible with pip or hombrew)"""
+# https://medium.com/casual-inference/the-most-time-efficient-ways-to-import-csv-data-in-python-cc159b44063d
