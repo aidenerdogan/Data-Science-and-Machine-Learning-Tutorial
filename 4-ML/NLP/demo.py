@@ -31,7 +31,9 @@ def identify_stopwords(text):
 	print(sentences)
 	# print('After identify stopwords len is {0}'.format(len(sentences)))
 	return sentences
+# where we remove word affixes to get to the base form of a word
 def stemming(text):
+	# stemming with nltk
 	import nltk
 	# snowball_stemmer_words = []
 	snowball_stemmer = nltk.stem.SnowballStemmer('english')
@@ -39,7 +41,25 @@ def stemming(text):
 	for words in sentences:
 		# snowball_stemmer_words.append(snowball_stemmer.stem(word))
 		print([snowball_stemmer.stem(word) for word in words])
-	# return snowball_stemmer_words
+# Where the root word is always a lexicographically correct word (present in the dictionary), but the root stem may not be so
+def lemmatizer(text):
+	# # lemmatizer with nltk
+	# from nltk.stem import WordNetLemmatizer
+	# lemmatizer = WordNetLemmatizer()
+	# sentences = identify_stopwords(text)
+	# lst =['a','n','v']
+	# for words in sentences:
+	# 	[print(word,':',lemmatizer.lemmatize(word,pos='v')) for word in words]
+	# lemmatizer with spacy-1
+	import spacy
+	nlp = spacy.load('en_core_web_sm')
+	text = nlp(text)
+	# for word in doc:
+	# 	print(word,':',word.lemma_)
+	# lemmatizer-2
+	text = ' '.join([word.lemma_ if word.lemma_ != '-PRON-' else word.text for word in text])
+	print(text)
+
 # word frequency-1
 def vectorizer(text):
 	from sklearn.feature_extraction.text import CountVectorizer
@@ -87,14 +107,62 @@ def NER(text):
 		print(ent.text, ent.start_char, ent.end_char, ent.label_, spacy.explain(ent.label_))
 	from spacy import displacy
 	displacy.serve(piano_class_doc, style='ent')
-def coref(text):
+def coreference(text):
 	import spacy
-	nlp = spacy.load('en_coref_lg')
+	nlp = spacy.load('en')
 	print('All cluster mentions')
 	doc = nlp(text)
-	for i in doc._.coref_cluster:
-		print(i.mentions)
+	import neuralcoref
+	# print(doc._.has_coref)
+	print(doc._.coref_clusters)	
+	# for i in doc._.coref_cluster:
+	# 	print(i.mentions)
 # frequently-mentioned noun chunks in text/doc
+# doc/test summarization with unsupervised learning techn	iqs
+def summarization(text):
+	from nltk.corpus import stopwords
+	from nltk.stem import PorterStemmer
+	from nltk.tokenize import word_tokenize, sent_tokenize
+	# create frequence table
+	freq_table = dict()
+	stopwords = set(stopwords.words('english'))
+	words = word_tokenize(text)
+	ps = PorterStemmer()
+	for word in words:
+		word = ps.stem(word)
+		if word in stopwords:
+			continue
+		if word in freq_table:
+			freq_table[word] += 1
+		else:
+			freq_table[word] = 1
+		# split to sentences
+		sentences = sent_tokenize(text)
+		# score sentences
+		sentence_value = dict()
+		for sentence in sentences:
+			word_coun_in_sent = (len(word_tokenize(sentence)))
+			for word_value in freq_table:
+				if word_value in sentence.lower():
+					if sentence[:10] in sentence_value:
+						sentence_value[sentence[:10]] += freq_table[word_value]
+					else:
+						sentence_value[sentence[:10]] = freq_table[word_value]
+		# find avarage score
+		sum_values = 0
+		for entry in sentence_value:
+			sum_values += sentence_value[entry]
+		avarage = int(sum_values / len(sentence_value))
+		# generate summary
+		sentence_count = 0
+		summary = ''
+		for sentence in sentences:
+			if sentence[:10] in sentence_value and sentence_value[sentence[:10]] > (1.5*avarage):
+				summary += ' '+ sentence
+				sentence_count +=1
+		print(summary)
+
+
 def key_terms(text):
 	import spacy
 	import textacy.extract
@@ -121,23 +189,25 @@ if __name__=="__main__":
 			break
 		else:
 			text = input('Your text less than 500 ch, pls try again.')
-	print("----------------Word Tokinizer----------------")
-	tokenize(text)
-	print("----------------Identify Stopwords----------------")
-	identify_stopwords(text)
-	print("----------------Stemming (Snowball-porter2)----------------")
-	stemming(text)
-	print("----------------Word Vectorization----------------")
-	vectorizer(text)
-	print("----------------Frequency(TF-IDF-TFIDF)----------------")
-	TFIDF(text)
-	print("----------------Part of Speech----------------")
-	part_of_speech(text)
-	print("----------------Dependency----------------")
-	dependency(text)
-	print("----------------Named Entity Recognation----------------")
-	NER(text)
+	# print("----------------Word Tokinizer----------------")
+	# tokenize(text)
+	# print("----------------Identify Stopwords----------------")
+	# identify_stopwords(text)
+	# print("----------------Stemming (Snowball-porter2)----------------")
+	# stemming(text)
+	# print("----------------Lemmaztization----------------")
+	# lemmatizer(text)
+	# print("----------------Word Vectorization----------------")
+	# vectorizer(text)
+	# print("----------------Frequency(TF-IDF-TFIDF)----------------")
+	# TFIDF(text)
+	# print("----------------Part of Speech----------------")
+	# part_of_speech(text)
+	# print("----------------Dependency----------------")
+	# dependency(text)
 	# print("----------------Named Entity Recognation----------------")
 	# NER(text)
-	# print("----------------Named Entity Recognation----------------")
-	# NER(text)
+	# print("----------------CoreFerence----------------")
+	# coreference(text)
+	print("----------------Summarization----------------")
+	summarization(text)

@@ -2,13 +2,14 @@
 +2-tokenize (similiar devide word by word)
 +3-remove stopword/identify stopwords
 +4-stemmer/stemmig (snowball)
-5-lemmatizer-------------
++5-lemmatizer
 +6a- vectorization/word embeddings-CountVectorizer
 +6b-vectorizer (TfidfVectorizer)/Term Frequency-Inverse Doc Freq/
 +7-parts of spech
 +8-dependency parsing
 +9-NER
 10-Coreference?
++11-topic modeling(summarization)
 
 
 
@@ -20,7 +21,9 @@ last-2:frequently-mentioned/key_terms.py
 last-1:santiment analyasis (logistic reg,random forest,DL LSTM)
 last:wordcloud
 
-topic modeling
+topic modeling https://towardsdatascience.com/understand-text-summarization-and-create-your-own-summarizer-in-python-b26a9f09fc70
+https://becominghuman.ai/text-summarization-in-5-steps-using-nltk-65b21e352b65
+https://towardsdatascience.com/text-summarization-using-tf-idf-e64a0644ace3
 Extracting Facts
 finding noun phrases
 
