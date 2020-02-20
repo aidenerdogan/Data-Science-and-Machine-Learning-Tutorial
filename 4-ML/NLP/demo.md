@@ -19,6 +19,9 @@
 
 last-2:frequently-mentioned/key_terms.py
 last-1:santiment analyasis (logistic reg,random forest,DL LSTM)
+-lr almost done
+-rf 
+-lstm high level
 last:wordcloud
 
 topic modeling https://towardsdatascience.com/understand-text-summarization-and-create-your-own-summarizer-in-python-b26a9f09fc70
