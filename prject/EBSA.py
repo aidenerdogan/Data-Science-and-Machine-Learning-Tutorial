@@ -1,2 +1,0 @@
-# Emoji Based Sentiment Analysis
-
