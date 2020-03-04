@@ -8,11 +8,11 @@ def insert_from_csv(file):
 		csv_reader = csv.DictReader(csv_file)
 		for row in csv_reader:
 			words = [word for word in (re.findall(r"[\w']+|[.,!?;]", row['Text'].rstrip())) if len(word) >= 3 and word not in stopwords]
-			print(words)
-			if row['Value'] == '1':
-				print(words)
+			# print(words)
+			if row['Value'] == '0':
+				# print(words)
 				[neg_file.write(word+'\n') for word in words]
-			elif row['Value'] == '0':
+			elif row['Value'] == '1':
 				[pos_file.write(word+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()
@@ -29,12 +29,12 @@ def insert_from_txt():
 	pos_text_file = open('rt_polarity_pos.txt', encoding = "ISO-8859-1")
 	for line  in pos_text_file.readlines():
 		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
-		print(words)
+		# print(words)
 		[pos_file.write(word+'\n') for word in words]
 	neg_text_file = open('rt_polarity_neg.txt', encoding = "ISO-8859-1")
 	for line  in neg_text_file.readlines():
 		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
-		print(words)
+		# print(words)
 		[neg_file.write(word+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()

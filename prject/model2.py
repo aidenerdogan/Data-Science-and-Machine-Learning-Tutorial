@@ -35,7 +35,7 @@ def extract_features(document):
 
 training_set = nltk.classify.apply_features(extract_features, words_with_sentiment)
 
-# print (training_set)
+print (training_set)
 
 classifier = nltk.classify.NaiveBayesClassifier.train(training_set)
 

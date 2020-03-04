@@ -79,4 +79,3 @@ def sentiment_analysis_twits_by_labelled_words():
  print ('Negative Precision: %.2f' % nltk.precision(expected_negative_set['negative'], actual_negative_set['negative']))
  print ('Negative Recall: %.2f' % nltk.recall(expected_negative_set['negative'], actual_negative_set['negative']))
 sentiment_analysis_twits_by_labelled_words()
-
