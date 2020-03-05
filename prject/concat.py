@@ -42,3 +42,20 @@ def insert_from_txt():
 	pos_text_file.close()
 
 # insert_from_txt()
+
+def insert_from_csv_tweets(file):
+	neg_file = open('negative_words.txt','a+')
+	pos_file = open('positive_words.txt','a+')
+	with open(file,'r') as csv_file:
+		csv_reader = csv.DictReader(csv_file)
+		for row in csv_reader:
+			words = [word for word in (re.findall(r"[\w']+|[.,!?;]", row['text'].rstrip())) if len(word) >= 3 and word not in stopwords]
+			# print(words)
+			if row['sentiment'] == 'Negative':
+				# print(words)
+				[neg_file.write(word+'\n') for word in words]
+			elif row['sentiment'] == 'Positive':
+				[pos_file.write(word+'\n') for word in words]
+	neg_file.close()
+	pos_file.close()
+# insert_from_csv_tweets('Sentiment.csv')

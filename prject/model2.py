@@ -23,8 +23,6 @@ word_features = fd.keys()
 # print (word_features)
 
 # Extract Features
-
-
 def extract_features(document):
     unique_words_in_document = set(document)
     features = {}

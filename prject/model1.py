@@ -5,7 +5,6 @@ def get_tarin_data():
  negative_words = []
  for word in open('positive_words.txt', 'r',encoding = "ISO-8859-1").readlines()[35:]:
      positive_words.append(({word.rstrip(): True}, 'positive'))
-
  for word in open('negative_words.txt', 'r', encoding = "ISO-8859-1").readlines()[35:]:
      negative_words.append(({word.rstrip(): True}, 'negative'))
  all_words_with_sentiment = positive_words + negative_words
