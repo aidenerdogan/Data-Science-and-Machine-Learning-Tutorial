@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.metrics import confusion_matrix
 import numpy as np
+import itertools
 import pandas as pd
 import matplotlib.pyplot as plt
 
