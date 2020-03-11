@@ -65,14 +65,8 @@ def get_evaluation_data(file):
             words = " ".join([word for word in (re.findall(r"[\w']+|[.,!?;]", row['text'].rstrip())) if len(word) >= 3 and word not in stopwords])
             if row['sentiment'] == 'Positive':
                 evaluation_data.append([words,1])
-            else:
+            elif row['sentiment'] == 'Negative'::
                 evaluation_data.append([words,0])
-    #         # print(words)
-    #         if row['sentiment'] == 'Negative':
-    #             # print(words)
-    #             [neg_file.write(word+'\n') for word in words]
-    #             elif row['sentiment'] == 'Positive':
-    #                 [pos_file.write(word+'\n') for word in words
     return evaluation_data
 # print(get_evaluation_data('Sentiment.csv'))
 def simple_evaluation(evaluation_data):
