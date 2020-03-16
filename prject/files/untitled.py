@@ -26,14 +26,14 @@ def insert_from_csv(file):
 def insert_from_txt():
 	neg_file = open('negative_words.txt','a+')
 	pos_file = open('positive_words.txt','a+')
-	pos_text_file = open('rt_polarity_pos.txt', encoding = "ISO-8859-1")
+	pos_text_file = open('positive_words2.txt', encoding = "ISO-8859-1")
 	for line  in pos_text_file.readlines():
-		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
+		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in pos_text_file]
 		# print(words)
 		[pos_file.write(word+'\n') for word in words]
-	neg_text_file = open('rt_polarity_negxt', encoding = "ISO-8859-1")
+	neg_text_file = open('negative_words2.txt', encoding = "ISO-8859-1")
 	for line  in neg_text_file.readlines():
-		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
+		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in neg_text_file]
 		# print(words)
 		[neg_file.write(word+'\n') for word in words]
 	neg_file.close()
@@ -41,23 +41,21 @@ def insert_from_txt():
 	neg_text_file.close()
 	pos_text_file.close()
 
-# insert_from_txt()
+insert_from_txt()
 
 def insert_from_text2(file):
 	neg_file = open('negative_words.txt','a+')
 	pos_file = open('positive_words.txt','a+')
 	pos_text_file = open(file, encoding = "ISO-8859-1")
 	for line  in pos_text_file.readlines():
-		# print(line)
-		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
-		print(words)
-		# [pos_file.write(word+'\n') for word in words]
-		[neg_file.write(word+'\n') for word in words]
-		# if line[1] == '0':
-		# 	# print(words)
-		# 	[neg_file.write(word+'\n') for word in words]
-		# elif line[1] == '1':
-		# 	[pos_file.write(word+'\n') for word in words]
+		print(line[0])
+		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line[0].rstrip())) if len(word) >= 3 and word not in stopwords]
+		# print(words)
+		if line[1] == '0':
+			# print(words)
+			[neg_file.write(word+'\n') for word in words]
+		elif line[1] == '1':
+			[pos_file.write(word+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()
-insert_from_text2('rt_polarity_neg.txt')
+# insert_from_text2('yelp_labelled.txt')
