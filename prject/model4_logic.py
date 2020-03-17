@@ -9,42 +9,38 @@ def get_train_data():
 	# first 35 lines for data info
 	# positive_words['1'] = {"abc":1, "pqr":3}
 	# print(len(positive_words['1']))
-	for word in open('positive_words.txt','r',encoding='ISO-8859-1').readlines()[35:]:
+	for word in open('positive_words2.txt','r',encoding='ISO-8859-1').readlines()[35:]:
 		word = word.replace('\n', '').lower()
 		if word in data_set[1]:
 			data_set[1][word] += 1
 		else:
 			data_set[1][word] = 1
-	for word in open('negative_words.txt', 'r', encoding = "ISO-8859-1").readlines()[35:]:
+	for word in open('negative_words2.txt', 'r', encoding = "ISO-8859-1").readlines()[35:]:
 		word = word.replace('\n', '').lower()
 		if word in data_set[0]:
 			data_set[0][word] += 1
 		else:
 			data_set[0][word] = 1
-	# print(data_set)
 	return data_set
 def get_unique(data_set):
 	unique_list = list(data_set[1])
-	# print(unique_list)
 	[unique_list.append(word[0]) for word in data_set[0] if word[0] not in unique_list]
 	return unique_list
 
 def sentiment_text(text):
 	words =[word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", text.rstrip())) if len(word) >= 3 and word not in stopwords]
-	# print(words)
+	print(words)
 	return words
 
 def get_P_positive(p_word_positive,words):
 	p_word_positive = 0
-	# print(data_set[1])
-	total = sum(data_set[0].values())+ sum(data_set[1].values())
+	total = sum(data_set[0].values())+sum(data_set[1].values())
 	for word in words:
-		# print('pos count',data_set[0][word])
 		if word in data_set[1]:
-			# print('$$$$$$$pos',data_set[1][word])
 			p_word_positive += (
 				(data_set[1][word]/sum(data_set[1].values())) * (sum(data_set[1].values())/total)
-				) / ((data_set[1][word] + (data_set[0][word] if word in data_set[0] else 0))/total)
+				) /((data_set[1][word] + (data_set[0][word] if word in data_set[0] else 0))/total)
+			print(word,'==',data_set[1][word])
 		# else:
 		# 	p_word_positive += 1/((1/(sum(data_set[1].values())+sum(data_set[0].values())))+ len(get_unique(data_set)))
 	return p_word_positive
@@ -53,25 +49,32 @@ def get_P_negative(p_word_negative,words):
 	p_word_negative = 0
 	total = sum(data_set[0].values())+ sum(data_set[1].values())
 	for word in words:
-		# print('neg count',data_set[0][word])
-		if word in data_set[0]:		
-			# print('$$$$$$$neg',data_set[0][word])
-			p_word_negative += (
-				(data_set[0][word]/sum(data_set[0].values())) * (sum(data_set[0].values())/total)
-				) / (((data_set[1][word] if word in data_set[1] else 0) +  data_set[0][word])/total)
+		if word in data_set[0]:
+			p_word_negative += ((data_set[0][word]/sum(data_set[0].values()))*(sum(data_set[0].values())/total)
+				)/(((data_set[1][word] if word in data_set[1] else 0) +  data_set[0][word])/total)
+			print(word,'==',data_set[0][word])
 		# else:
 			# p_word_negative += 1/((1/(sum(data_set[1].values())+sum(data_set[0].values())))+ len(get_unique(data_set)))
 	return p_word_negative
+
 def get_accuracy(file):
 	TP_TN = 0
 	with open(file,'r',encoding = "ISO-8859-1") as csv_file:
 		csv_reader = csv.DictReader(csv_file)
 		for (i,row) in enumerate(csv_reader):
 			if i<101:
-				if get_sentiment(sentiment_text(row['v2'])) == row['v1']:
+				if get_sentiment(sentiment_text(row['SentimentText'])) == row['Sentiment']:
 					TP_TN += 1
 	return TP_TN/100
-
+def get_accuracy_from_text(file):
+	TP_TN = 0
+	text_file = open(file,'r+')
+	for (i,row) in enumerate(text_file.readlines()):
+		# print(row)
+		if i<101:
+			if get_sentiment(sentiment_text(row)) == row[-2:][0]:
+				TP_TN += 1
+	return TP_TN/100
 
 def get_sentiment(words):
 	result = None
@@ -80,10 +83,11 @@ def get_sentiment(words):
 	p_word_negative = get_P_negative(p_word_negative,words)
 	print('pos',p_word_positive)
 	print('neg',p_word_negative)
+	# '1' mean positive, '0' mean negative
 	if p_word_positive > p_word_negative:
-		result = 'ham'
+		result = '1'
 	elif p_word_positive < p_word_negative :
-		result = 'spam'
+		result = '0'
 	else:
 		result = 'neatural'
 	return result
@@ -95,7 +99,8 @@ if __name__ == '__main__':
 	import timeit
 	start = timeit.default_timer()
 	print(get_sentiment(sentiment_text(text)))
-	# print(get_accuracy('spam.csv'))
+	# print(get_accuracy_from_text('files/imdb_labelled.txt'))
+	# print(get_accuracy('train.csv'))
 	stop = timeit.default_timer()
 	print('Time: ', stop - start)
 	

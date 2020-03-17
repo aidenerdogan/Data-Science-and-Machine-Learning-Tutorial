@@ -41,21 +41,24 @@ def insert_from_txt():
 	neg_text_file.close()
 	pos_text_file.close()
 
-insert_from_txt()
+# insert_from_txt()
 
-def insert_from_text2(file):
+def insert_from_text_labelled(file):
 	neg_file = open('negative_words.txt','a+')
 	pos_file = open('positive_words.txt','a+')
 	pos_text_file = open(file, encoding = "ISO-8859-1")
 	for line  in pos_text_file.readlines():
-		print(line[0])
-		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line[0].rstrip())) if len(word) >= 3 and word not in stopwords]
+		# print(line[-2:][0])
+		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
 		# print(words)
-		if line[1] == '0':
+		# print([word for word in words])
+		# print(line[-2:][0])
+		if line[-2:][0] == '0':
 			# print(words)
-			[neg_file.write(word+'\n') for word in words]
+			[neg_file.write(word.lower()+'\n') for word in words]
 		elif line[1] == '1':
-			[pos_file.write(word+'\n') for word in words]
+			# print(words)
+			[pos_file.write(word.lower()+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()
-# insert_from_text2('yelp_labelled.txt')
+insert_from_text_labelled('yelp_labelled.txt')
