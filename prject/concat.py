@@ -60,4 +60,4 @@ def insert_from_text2(file):
 		# 	[pos_file.write(word+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()
-insert_from_text2('rt_polarity_neg.txt')
+# insert_from_text2('rt_polarity_neg.txt')

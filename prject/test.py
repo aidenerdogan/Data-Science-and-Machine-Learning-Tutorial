@@ -43,6 +43,7 @@ def get_P_positive(p_word_positive,words):
 				) /((data_set[1][word] + (data_set[0][word] if word in data_set[0] else 0))/total)
 		# else:
 		# 	p_word_positive += 1/((1/(sum(data_set[1].values())+sum(data_set[0].values())))+ len(get_unique(data_set)))
+		print(word,'==',data_set[1][word])
 	return p_word_positive
 
 def get_P_negative(p_word_negative,words):
@@ -54,17 +55,8 @@ def get_P_negative(p_word_negative,words):
 				)/(((data_set[1][word] if word in data_set[1] else 0) +  data_set[0][word])/total)
 		# else:
 			# p_word_negative += 1/((1/(sum(data_set[1].values())+sum(data_set[0].values())))+ len(get_unique(data_set)))
+			print(word,'==',data_set[0][word])
 	return p_word_negative
-
-def get_accuracy(file):
-	TP_TN = 0
-	with open(file,'r',encoding = "ISO-8859-1") as csv_file:
-		csv_reader = csv.DictReader(csv_file)
-		for (i,row) in enumerate(csv_reader):
-			if i<101:
-				if get_sentiment(sentiment_text(row['SentimentText'])) == row['Sentiment']:
-					TP_TN += 1
-	return TP_TN/100
 
 
 def get_sentiment(words):
@@ -76,21 +68,21 @@ def get_sentiment(words):
 	print('neg',p_word_negative)
 	# '1' mean positive, '0' mean negative
 	if p_word_positive > p_word_negative:
-		result = '1'
+		result = 'Positive'
 	elif p_word_positive < p_word_negative :
-		result = '0'
+		result = 'Negative'
 	else:
-		result = 'neatural'
+		result = 'Neatural'
 	return result
 
 if __name__ == '__main__':
 	data_set = {1:{},0:{}}
 	get_train_data()
-	# text = input('pls input a text :')
+	text = input('pls input a text :')
 	import timeit
 	start = timeit.default_timer()
-	# print(get_sentiment(sentiment_text(text)))
-	print(get_accuracy('train.csv'))
+	print(get_sentiment(sentiment_text(text)))
+	# print(get_accuracy('train.csv'))
 	stop = timeit.default_timer()
 	print('Time: ', stop - start)
 	

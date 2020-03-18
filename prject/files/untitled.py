@@ -4,61 +4,67 @@ stopwords = ["wouldn't", 'own', 'ours', 'under', "who's", 'also', "here's", 'cou
 def insert_from_csv(file):
 	neg_file = open('negative_words.txt','a+')
 	pos_file = open('positive_words.txt','a+')
-	with open(file,'r') as csv_file:
+	neg_file2 = open('negative_words2.txt','a+')
+	pos_file2 = open('positive_words2.txt','a+')
+	with open(file,'r',encoding='ISO-8859-1') as csv_file:
 		csv_reader = csv.DictReader(csv_file)
 		for row in csv_reader:
 			words = [word for word in (re.findall(r"[\w']+|[.,!?;]", row['Text'].rstrip())) if len(word) >= 3 and word not in stopwords]
 			# print(words)
-			if row['Value'] == '0':
+			if row['Sentiment'] == '0':
 				# print(words)
 				[neg_file.write(word+'\n') for word in words]
-			elif row['Value'] == '1':
+				[neg_file2.write(word+'\n') for word in words]
+			elif row['Sentiment'] == '1':
 				[pos_file.write(word+'\n') for word in words]
+				[pos_file2.write(word+'\n') for word in words]
 	neg_file.close()
 	pos_file.close()
+	neg_file2.close()
+	pos_file2.close()
 
 
-# insert_from_csv('amazon_cells_labelled.csv')
-# insert_from_csv('imdb_labelled.csv')
-# insert_from_csv('yelp_labelled.csv')
+insert_from_csv('train.csv')
+# # insert_from_csv('imdb_labelled.csv')
+# # insert_from_csv('yelp_labelled.csv')
 
 
-def insert_from_txt():
-	neg_file = open('negative_words.txt','a+')
-	pos_file = open('positive_words.txt','a+')
-	pos_text_file = open('positive_words2.txt', encoding = "ISO-8859-1")
-	for line  in pos_text_file.readlines():
-		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in pos_text_file]
-		# print(words)
-		[pos_file.write(word+'\n') for word in words]
-	neg_text_file = open('negative_words2.txt', encoding = "ISO-8859-1")
-	for line  in neg_text_file.readlines():
-		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in neg_text_file]
-		# print(words)
-		[neg_file.write(word+'\n') for word in words]
-	neg_file.close()
-	pos_file.close()
-	neg_text_file.close()
-	pos_text_file.close()
+# def insert_from_txt():
+# 	neg_file = open('negative_words.txt','a+')
+# 	pos_file = open('positive_words.txt','a+')
+# 	pos_text_file = open('positive_words2.txt', encoding = "ISO-8859-1")
+# 	for line  in pos_text_file.readlines():
+# 		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in pos_text_file]
+# 		# print(words)
+# 		[pos_file.write(word+'\n') for word in words]
+# 	neg_text_file = open('negative_words2.txt', encoding = "ISO-8859-1")
+# 	for line  in neg_text_file.readlines():
+# 		words = [word.lower() for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords and word not in neg_text_file]
+# 		# print(words)
+# 		[neg_file.write(word+'\n') for word in words]
+# 	neg_file.close()
+# 	pos_file.close()
+# 	neg_text_file.close()
+# 	pos_text_file.close()
 
-# insert_from_txt()
+# # insert_from_txt()
 
-def insert_from_text_labelled(file):
-	neg_file = open('negative_words.txt','a+')
-	pos_file = open('positive_words.txt','a+')
-	pos_text_file = open(file, encoding = "ISO-8859-1")
-	for line  in pos_text_file.readlines():
-		# print(line[-2:][0])
-		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
-		# print(words)
-		# print([word for word in words])
-		# print(line[-2:][0])
-		if line[-2:][0] == '0':
-			# print(words)
-			[neg_file.write(word.lower()+'\n') for word in words]
-		elif line[1] == '1':
-			# print(words)
-			[pos_file.write(word.lower()+'\n') for word in words]
-	neg_file.close()
-	pos_file.close()
-insert_from_text_labelled('yelp_labelled.txt')
+# def insert_from_text_labelled(file):
+# 	neg_file = open('negative_words.txt','a+')
+# 	pos_file = open('positive_words.txt','a+')
+# 	pos_text_file = open(file, encoding = "ISO-8859-1")
+# 	for line  in pos_text_file.readlines():
+# 		# print(line[-2:][0])
+# 		words = [word for word in (re.findall(r"[\w']+|[.,!?;]", line.rstrip())) if len(word) >= 3 and word not in stopwords]
+# 		# print(words)
+# 		# print([word for word in words])
+# 		# print(line[-2:][0])
+# 		if line[-2:][0] == '0':
+# 			# print(words)
+# 			[neg_file.write(word.lower()+'\n') for word in words]
+# 		elif line[1] == '1':
+# 			# print(words)
+# 			[pos_file.write(word.lower()+'\n') for word in words]
+# 	neg_file.close()
+# 	pos_file.close()
+# insert_from_text_labelled('yelp_labelled.txt')
