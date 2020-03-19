@@ -64,16 +64,17 @@ def get_accuracy(file):
 		csv_reader = csv.DictReader(csv_file)
 		# result_dict = []
 		for (i,row) in enumerate(csv_reader):
-			if i<10000:
+			if i<100:
+				system_output = get_sentiment(sentiment_text(row['Text']))
 				if row['Sentiment'] == '0':
 					row['Sentiment'] = 'Negative'
 				else:
 					row['Sentiment'] = 'Positive'
-				if get_sentiment(sentiment_text(row['Text'])) == row['Sentiment']:
+				if system_output == row['Sentiment']:
 					TP_TN += 1
 				else:
 					FT_FN += 1
-				print({'text':row['Text'],'excepted_output':row['Sentiment'],'system_output':get_sentiment(sentiment_text(row['Text']))})
+				print({'text':row['Text'],'excepted_output':row['Sentiment'],'system_output':system_output})
 				# result_dict.append({'text':row['Text'],'excepted_output':row['Sentiment'],'system_output':get_sentiment(sentiment_text(row['Text']))})
 		print('True predict count :',TP_TN)
 		print('False predict count :',FT_FN)
@@ -109,4 +110,6 @@ if __name__ == '__main__':
 	print(get_accuracy('train.csv'))
 	stop = timeit.default_timer()
 	print('Time: ', stop - start)
+	print('Time for each row: ', (stop - start)/100)
+
 	
