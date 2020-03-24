@@ -57,14 +57,14 @@ def get_P_negative(p_word_negative,words):
 			# p_word_negative += 1/((1/(sum(data_set[1].values())+sum(data_set[0].values())))+ len(get_unique(data_set)))
 	return p_word_negative
 
-def get_accuracy(file):	
+def get_accuracy(file):
 	TP_TN = 0
 	FT_FN = 0
 	with open(file,'r',encoding = "ISO-8859-1") as csv_file:
 		csv_reader = csv.DictReader(csv_file)
 		# result_dict = []
 		for (i,row) in enumerate(csv_reader):
-			if i<100:
+			if i<1000:
 				system_output = get_sentiment(sentiment_text(row['Text']))
 				if row['Sentiment'] == '0':
 					row['Sentiment'] = 'Negative'
@@ -110,4 +110,7 @@ if __name__ == '__main__':
 	print(get_accuracy('train.csv'))
 	stop = timeit.default_timer()
 	print('Time: ', stop - start)
-	print('Time for each row: ', (stop - start)/100)
+	print('Time for each row: ', (stop - start)/1000)
+
+# username :- ahmet
+# password :- 9357971134524524
