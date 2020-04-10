@@ -1,23 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[268]:
-
-
 from nltk import ngrams
 from nltk.corpus import stopwords
 import string
-import pandas
-
-
-# In[269]:
+import pandas as pd
+import numpy as np
+import timeit
+from random import shuffle
 
 
 stopwords_english = stopwords.words('english')
-
-
-# In[270]:
-
 
 # clean words, i.e. remove stopwords and punctuation
 def clean_words(words, stopwords_english):
@@ -29,18 +22,10 @@ def clean_words(words, stopwords_english):
             words_clean.append(word)
     return words_clean
 
-
-# In[271]:
-
-
 # feature extractor function for unigram
 def bag_of_words(words):
     words_dictionary = dict([word, True] for word in words)
     return words_dictionary
-
-
-# In[272]:
-
 
 # feature extractor function for ngrams (bigram)
 def bag_of_ngrams(words, n=2):
@@ -49,74 +34,8 @@ def bag_of_ngrams(words, n=2):
         words_ng.append(item)
     words_dictionary = dict([word, True] for word in words_ng)
     return words_dictionary
-
-
-# In[273]:
-
-
-from nltk.tokenize import word_tokenize
-text = "It was a very good movie."
-words = word_tokenize(text.lower())
-
-
-# In[274]:
-
-
-print(words)
-
-
-# In[275]:
-
-
-print(bag_of_ngrams(words))
-
-
-# In[276]:
-
-
-words_clean = clean_words(words, stopwords_english)
-print (words_clean)
-
-
-# In[277]:
-
-
 important_words = ['above', 'below', 'off', 'over', 'under', 'more', 'most', 'such', 'no', 'nor', 'not', 'only', 'so', 'than', 'too', 'very', 'just', 'but']
-
-
-# In[278]:
-
-
 stopwords_english_for_bigrams = set(stopwords_english) - set(important_words)
-
-words_clean_for_bigrams = clean_words(words, stopwords_english_for_bigrams)
-print (words_clean_for_bigrams)
-
-
-# In[279]:
-
-
-unigram_features = bag_of_words(words_clean)
-print(unigram_features)
-
-# In[280]:
-
-
-bigram_features = bag_of_ngrams(words_clean_for_bigrams)
-print(bigram_features)
-
-
-# In[281]:
-
-
-# combine both unigram and bigram features
-all_features = unigram_features.copy()
-all_features.update(bigram_features)
-print(all_features)
-
-
-# In[282]:
-
 
 # let's define a new function that extracts all features
 # i.e. that extracts both unigram and bigrams features
@@ -132,91 +51,114 @@ def bag_of_all_words(words, n=2):
 
     return all_features
 
+tweet_data = pd.read_csv('clean_tweet2.csv',index_col=0)
+tweet_data.head()
 
-# In[283]:
+print(tweet_data.shape)
 
+print(tweet_data.info())
 
-print(bag_of_all_words(words))
+print(tweet_data[tweet_data.isnull().any(axis=1)].head())
 
+print(np.sum(tweet_data.isnull().any(axis=1)))
 
-# In[284]:
+print(tweet_data.isnull().any(axis=0))
 
+tweet_data.dropna(inplace=True)
+tweet_data.reset_index(drop=True,inplace=True)
+print(tweet_data.info())
 
-from nltk.corpus import movie_reviews
+print(tweet_data.shape)
 
-pos_reviews = []
-for fileid in movie_reviews.fileids('pos'):
-    words = movie_reviews.words(fileid)
-    pos_reviews.append(words)
+# pos_reviews = np.array([row for row in tweet_data[tweet_data.sentiment == 1].text.str.split()])
+pos_reviews = [row for row in tweet_data[tweet_data.sentiment == 1].text.str.split()]
+# [value for (index, value) in pos_reviews.items()]
+# pos_reviews
 
-neg_reviews = []
-for fileid in movie_reviews.fileids('neg'):
-    words = movie_reviews.words(fileid)
-    neg_reviews.append(words)
+# pos_reviews = np.array([row for row in tweet_data[tweet_data.sentiment == 1].text.str.split()])
+neg_reviews = [row for row in tweet_data[tweet_data.sentiment == 0].text.str.split()]
+# [value for (index, value) in pos_reviews.items()]
+# neg_reviews
 
-
-# In[285]:
-
-
-# print(pos_reviews[0])
-
-
-# In[286]:
-
-
-# positive reviews feature set
 pos_reviews_set = []
 for words in pos_reviews:
+#     print(words)
     pos_reviews_set.append((bag_of_all_words(words), 'pos'))
+# pos_reviews_set
 
-# negative reviews feature set
 neg_reviews_set = []
 for words in neg_reviews:
+#     print(words)
     neg_reviews_set.append((bag_of_all_words(words), 'neg'))
+# neg_reviews_set
+
+print (len(pos_reviews_set), len(neg_reviews_set)) # Output: (1000, 1000)
+
+# radomize pos_reviews_set and neg_reviews_set
+# doing so will output different accuracy result everytime we run the program
+shuffle(pos_reviews_set)
+shuffle(neg_reviews_set)
+
+test_set = pos_reviews_set[:int((0.2*len(pos_reviews_set)))] + neg_reviews_set[:int((0.2*len(neg_reviews_set)))]
+train_set = pos_reviews_set[int((0.2*len(pos_reviews_set))):] + neg_reviews_set[int((0.2*len(neg_reviews_set))):]
+
+print(len(test_set),  len(train_set))
+print('\nTRANING MODEL\n')
+from nltk import classify
+from nltk import NaiveBayesClassifier
+start = timeit.default_timer()
+classifier = NaiveBayesClassifier.train(train_set)
+
+accuracy = classify.accuracy(classifier, test_set)
+stop = timeit.default_timer()
+print('total time :', stop-start)
+print('time for each row :',(stop-start)/len(test_set))
+print('accuracy',accuracy)
+print (classifier.show_most_informative_features(10))
+
+print('\nExamles\n')
+from nltk.tokenize import word_tokenize
+custom_review = "I hated the film. It was a disaster. Poor direction, bad acting."
+print('example 1 :',custom_review)
+custom_review_tokens = word_tokenize(custom_review)
+custom_review_set = bag_of_all_words(custom_review_tokens)
+print (classifier.classify(custom_review_set))
+# Negative review correctly classified as negative
+
+# probability result
+prob_result = classifier.prob_classify(custom_review_set)
+print (prob_result)
+print (prob_result.max())
+print (prob_result.prob("neg"))
+print (prob_result.prob("pos"))
 
 
-# In[287]:
+custom_review = "It was a wonderful and amazing movie. I loved it. Best direction, good acting."
+print('example 2 :',custom_review)
+custom_review_tokens = word_tokenize(custom_review)
+custom_review_set = bag_of_all_words(custom_review_tokens)
 
+print (classifier.classify(custom_review_set))
+# Positive review correctly classified as positive
 
-# print(pos_reviews_set)
+# probability result
+prob_result = classifier.prob_classify(custom_review_set)
+print (prob_result)
+print (prob_result.max())
+print (prob_result.prob("neg"))
+print (prob_result.prob("pos"))
 
+custom_review = input('please enter a sentence :')
+custom_review_tokens = word_tokenize(custom_review)
+custom_review_set = bag_of_all_words(custom_review_tokens)
 
-# In[288]:
+print (classifier.classify(custom_review_set))
+# Positive review correctly classified as positive
 
-
-tweet_data = pandas.read_csv('clean_tweet2.csv')
-
-
-# In[292]:
-
-
-pos_reviews = list(tweet_data[tweet_data.sentiment == 1].text.str.lower().str.split())
-# print('pos_reviews\n\n',pos_reviews)
-
-
-# In[290]:
-
-
-neg_reviews = list(tweet_data[tweet_data.sentiment == 0].text.str.lower().str.split())
-# len(neg_reviews)+len(pos_reviews)
-# print(neg_reviews)
-
-
-# In[300]:
-
-
-# positive reviews feature set
-for i in range(len(pos_reviews)):
-    print(pos_reviews[i])
-    bags = bag_of_all_words(pos_reviews[i])
-    print(bags)
-# pos_reviews_set2 = []
-# for index in range(len(pos_reviews)-1):
-#     pos_reviews_set2.append((bag_of_all_words(pos_reviews[index]), 'pos'))
-# print(pos_reviews_set2)
-# # negative reviews feature set
-# neg_reviews_set2 = []
-# for words in neg_reviews:
-#     neg_reviews_set2.append((bag_of_all_words(words), 'neg'))
-# print(neg_reviews_set2)
+# probability result
+prob_result = classifier.prob_classify(custom_review_set)
+print (prob_result)
+print (prob_result.max())
+print (prob_result.prob("neg"))
+print (prob_result.prob("pos"))
 
