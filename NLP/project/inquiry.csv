@@ -1,0 +1,65 @@
+,Description,Services,Label
+0,I am Urvashi patel. I want to develop AI & ML module and IOS.,AI & ML,High
+1,"Hiii, I am Megha. I need PHP website using Web Development service.",Web Development,High
+2,"Hiii, I am Meena. I need C# website using Web Development service.",Web Development,High
+3,I am Beena and I want to build website and mobile application using Ios framework. i want to use service as Mobile Apps,Mobile Apps,High
+4,I am Pinal and i want to need product.,Design,Low
+5,"Hiii, I am Reena. I need DevOps functionality for my product.",DevOps,High
+6,I am Krupa and I want to need IoT services,IoT,High
+7,"I want to improve my website so, I need Interactive Content for my website",Interactive Content,High
+8,"Hello, I am Seeta. I have my mobile application content and all but i need QA for testing purpose.",QA,High
+9,"Hiii, I am Geeta. I have large amout of healthcrae data and apply machine learning concept using AI & ML service.",AI & ML,High
+10,"I am Rita and I will start my company, so i want to develop website using Design services.",Design,High
+11,"Hiii, I am Femina. I need design functionality for my website",DevOps,Low
+12,"Hello, I am Nilam. I want to develop  application",IoT,Low
+13,"Hiii, I am heena. I need QA for my product",QA,High
+14,"hello, I am Pinky patel. I want to build Module using QA",AI & ML,Low
+15,"hello, I am Uru Patel. I want to build module using AI & ML and Design",AI & ML,High
+16,I am Greema and I want to build website and mobile application using Ios framework. i want to use service,Mobile Apps,Low
+17,I am pinku and I want to build website and mobile application using Ios framework. i want to use service as Mobile Apps,Mobile Apps,High
+18,I want to develop a website,Design,Low
+19,I want to design a website,Design,Low
+20,I need one website Design for my business,Design,High
+21,"Hiii, I need PHP website using Web Development service.",Web Development,High
+22,"Hiii, I need C# website using Web Development service.",Web Development,High
+23,I want to need IoT services,IoT,High
+24,I want to need IoT services for my industry,IoT,High
+25,I have my mobile application content and all but i need QA for testing purpose.,QA,High
+26,I need a specialist in IOS to do a few changes for me in my Mobile Apps,IOS,High
+27,Android based E-learning platform to sell courses in multiple languages,Android,High
+28,"Travel Umroh Mobile Application We already have travel ERP application with React Native, but we need to build platform that connects Tour Guide and Umroh travelers with mobile apps. This application provides comfort for Umrah Travelers during umrah and religious tourism. This application is equipped with features that provide guidance for Umrah Travelers in carrying out religious services, such as information on visited sites, payers, and e-Qur’an. In additional features, this application is also equipped with communication feature between Tour Guide and Umrah Travelers, an emergency button that can be used in an emergency, and a notification of the position of the whole Jamaah that can always be monitored by Tour Guide.",React Native,High
+29,Android based E-learning platform to sell courses in multiple languages,Flutter,Low
+30,IONIC based E-learning platform to sell courses in multiple languages,IONIC,High
+31,"We are looking for a Lightspeed Onsite to Woocommerce integration that can do all of the following. It must be compatible with the Lightspeed Onsite version, not the retail version.",Xamarin,Low
+32,"We are looking for a Node Onsite to Woocommerce integration that can do all of the following. It must be compatible with the Lightspeed Onsite version, not the retail version.",Node,High
+33,I want to need PHP website urgently,PHP,High
+34,I am in need of a .NET website for my new clothing brand. Nothing to big and need it to be pretty straight forward.,.NET,High
+35,I need a new website. I need you to design and build it. A cryptocurrency exchange!! Please send me prof of work !!,Java,Low
+36,I need a new website. I need you to website design and build it. A cryptocurrency exchange!! Please send me prof of work !!,Python,Low
+37,I need ruby Rails. I need you to design and build it. A cryptocurrency exchange!! Please send me prof of work !!,Rails,High
+38,I want to develop website. I need you to design and build it. Please send me prof of work !!,Angular,Low
+39,"I need a new website. I already have a design, I just need you to build it. I’m looking to hire a developer that can work with Django CMS. They also need to be able to work with other developers during this project.",ReactJs,Low
+40,The project is in the trading sphere and we need someone to do admin. The design is ready.,Vue,Low
+41,The project TypeScript  is in the trading sphere and we need someone to do admin. The design is ready.,TypeScript,High
+42,I want a wordpress developer who can build a vibrant website and have hands-on experience on WPF theme,WPF,High
+43,I need some one who have good knowledge into HTML 5 with customise skills using php.,HTML 5,High
+44,I need some one who have good knowledge into AWS with customise skills using php.,AWS,High
+45,I want to develop cloud for my business app.,Google Cloud,Low
+46,"I have a Azure website with its current theme. and would like to add an online event registeration (Event ticketing) module with payment gateways. Event Registration Module & eCommerce should have same word press theme with the below features: - Calendar of all events; - Map to show event location. - Service or Product Catalog and Classification - Custom booking form for class registration with customized fields per course (See [login to view URL]). - In the booking form some customized fields are repeated per ticket such student name (See [login to view URL]). - Promotional codes options - Discount engine (i.e. discount based on number of tickets purchased in one order) - Custom field for NSW Voucher validation and deduction. - Export feature for all booking and attendees details to excel or csv. - Payment gateway via credit cards, paypal and bank transfer and [login to view URL] and stripe. - Profile registration and retrieval for parent login and his kids records (if possible). - Mobile friendly interface - Responsive or if it has a ready made mobile app. - SMS and email confirmation after order complication each event. - Feature to send email to all registerers at one hit (See Try booking). - Refund feature if possible. see trybooking features on [login to view URL]",Azure,High
+47,I need some one who have good knowledge into Magento 1.9 with customise skills using Hudson.,Hudson,High
+48,I am lookinf for person who know Jenkins,Jenkins,High
+49,I need devloper for website app,Appium,Low
+50,I need automation testion using Selenium,Selenium,High
+51,The project is in the trading and we need someone to do admin. The design is ready.,Gradle,Low
+52,The project is in the MySQL and we need someone to do admin. The design is ready.,MySQL,High
+53,The project is in the trading sphere and we need someone to do admin. The design is ready.,DynamoDB,Low
+54,The project is in the PostreSQLand we need someone to do admin. The design is ready.,PostgreSQL,High
+55,The project is in the trading sphere and we need someone to do admin. The design is ready.,Oracle,Low
+56,I need some one who have good knowledge into AWS with customise skills using php.,FIrebase,Low
+57,I need some one who have good knowledge into MongoDB with customise skills using python.,MongoDB,High
+58,I need some one who have good knowledge into AWS with customise skills using php.,Redis,Low
+59,My project is realated to Magento framework and develop a new website.,Magento,High
+60,My project is realated to Wordpress framework and develop a new website.,Wordpress,High
+61,I need a specialist in Shopify to do a few changes for me in my checkout and emails,Shopify,High
+62,I need a specialist to do a few changes for me in my checkout and emails,Umbraco,Low
+63,I need a specialist in Drupal to do a few changes for me in my checkout and emails,Drupal,High
