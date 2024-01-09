@@ -1,0 +1,11 @@
+Metadata-Version: 1.1
+Name: ml-fs
+Version: 1.0.1
+Summary: Python implementations of some of the fundamental Machine Learning models and algorithms from scratch.
+Home-page: https://github.com/aidenerdogan/ML-From_Scratch
+Author: Aiden Erdogan
+Author-email: UNKNOWN
+License: Apache 2.0
+Download-URL: https://github.com/aidenerdogan/ML-From_Scratch/archive/main.zip
+Description: UNKNOWN
+Platform: UNKNOWN
